@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 
 function Button({ children, onClick }) {
   return (
@@ -88,6 +88,7 @@ function FriendsList({ friends, onSelection, selectedFriend }) {
 
 function Friend({ friend, onSelection, selectedFriend }) {
   const isSelected = selectedFriend?.id === friend.id;
+
   return (
     <li className={isSelected ? "selected" : ""}>
       <img src={friend.image} alt={friend.name} />
@@ -169,6 +170,13 @@ function FormSplitBill({ selectedFriend, onSplitBill }) {
     if (!bill || !paidByUser) return;
     onSplitBill(whoIsPaying === "user" ? paidByFriend : -paidByUser);
   }
+
+  useEffect(
+    function () {
+      document.title = `Friend | ${selectedFriend.name}`;
+    },
+    [selectedFriend]
+  );
 
   return (
     <form className="form-split-bill" onSubmit={handleSubmit}>
